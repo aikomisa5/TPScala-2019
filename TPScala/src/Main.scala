@@ -8,7 +8,10 @@ object Main {
       imprimir(lines)
 
       val alfabeto = obtenerAlfabeto(lines)
-      print(alfabeto.foreach((c: String) => println("Elemento del alfabeto: " + c)))
+      println(alfabeto.foreach((c: String) => println("Elemento del alfabeto: " + c)))
+      
+      val cantidadEstado = obtenerCantidadEstados(lines)
+      println("La cantidad de estados es: " + cantidadEstado)
 
     } catch {
       case _: Throwable => println("Ha ocurrido un error al intentar leer el archivo .txt")
@@ -22,6 +25,24 @@ object Main {
         println(l.head)
         imprimir(l.tail)
       }
+    }
+
+    def obtenerAlfabeto(lista: List[String]): Array[String] = {
+
+      //Hago un split del string ubicado en el head de la lista del alfabeto
+      val alfa = lista.head.split(", ")
+
+      //Retorno alfa
+      alfa
+
+    }
+    
+    @annotation.tailrec
+    def obtenerCantidadEstados(lista: List[String], puntero: Int = 0): String = {
+      if (puntero == 1)
+        lista.head
+      else
+        obtenerCantidadEstados(lista.tail, puntero+1)
     }
 
     /*
@@ -39,16 +60,6 @@ object Main {
 
     }
     */
-
-    def obtenerAlfabeto(s: List[String]): Array[String] = {
-
-      //Hago un split del string ubicado en el head de la lista del alfabeto
-      val alfa = s.head.split(", ")
-
-      //Retorno alfa
-      alfa
-
-    }
   }
 
 }
