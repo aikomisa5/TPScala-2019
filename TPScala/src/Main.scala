@@ -7,9 +7,8 @@ object Main {
       val lines = Source.fromFile("automata.txt").getLines.toList
       imprimir(lines)
 
-      print("Luego de ejecutar obtenerAlfabeto: " + obtenerAlfabeto(lines))
-
-      //println(input.charAt(1))
+      val alfabeto = obtenerAlfabeto(lines)
+      print(alfabeto.foreach((c: String) => println("Elemento del alfabeto: " + c)))
 
     } catch {
       case _: Throwable => println("Ha ocurrido un error al intentar leer el archivo .txt")
@@ -17,7 +16,6 @@ object Main {
 
     }
 
-    //lines.foreach( (c: String) => println(c) )
     @annotation.tailrec
     def imprimir[A](l: List[A]): Unit = {
       if (!l.isEmpty) {
@@ -43,14 +41,14 @@ object Main {
     */
 
     def obtenerAlfabeto(s: List[String]): Array[String] = {
-      val alfa = s.head.split(",")
 
-      alfa.foreach((c: String) => if (c.equals("a")) println("Match!: " + c))
+      //Hago un split del string ubicado en el head de la lista del alfabeto
+      val alfa = s.head.split(", ")
 
+      //Retorno alfa
       alfa
 
     }
-
   }
 
 }
