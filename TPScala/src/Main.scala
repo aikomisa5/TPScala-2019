@@ -111,6 +111,43 @@ object Main {
       println ("Info 2: " + info2)
       true  
     }
+    
+    def proceso(cadena: String): Boolean = {
+      val lines = Source.fromFile("automata.txt").getLines.toList
+      val tuplas = obtenerTransicionesEnTuplas(lines)
+      
+      //procesoRecursivo("1", cadena, tuplas)  
+      true
+    }
+    
+    /*
+    def procesoRecursivo(estadoActual : String, cadena : String, transicionesTuplas : List[(String,String,String,Boolean)]) : Boolean = {
+      val b = false
+      
+      cadena.foreach(f=>{
+        b = b + false
+      })
+      
+      true 
+    }
+    
+    */
+    
+    def seEncuentraEnAlgunaTransicion(c : Char, estadoActual : String): Boolean = {
+      val lines = Source.fromFile("automata.txt").getLines.toList
+      val tuplas = obtenerTransicionesEnTuplas(lines)
+      
+      tuplas.foreach(f => {
+        if (f._2 == c && f._1 == estadoActual){
+          true
+        }
+          
+      })
+      
+      false
+    }
+    
+    
 
     /*
     def verificarInput (input : String): Boolean = {
