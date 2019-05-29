@@ -15,6 +15,14 @@ object Main {
       
       val estadosFinales = obtenerEstadosFinales(lines)
       println(estadosFinales.foreach((c: String) => println("Estado final: " + c)))
+      
+      procesar("Fifito")
+      
+      pruebaSplit()
+      
+      val tuplas = obtenerTransicionesEnTuplas(lines)
+      
+      tuplas.foreach(f => println("El valor del elemento es: " + f))
 
     } catch {
       case _: Throwable => println("Ha ocurrido un error al intentar leer el archivo .txt")
@@ -52,6 +60,56 @@ object Main {
         lista.head
       else
         obtenerCantidadEstados(lista.tail, puntero+1)
+    }
+    
+      
+    def obtenerTransicionesEnTuplas(transiciones: List[String], tuplas: List[(String,String,String,Boolean)] = List[(String,String,String,Boolean)]() , puntero: Int = 0): List[(String,String,String,Boolean)] = {
+      println("Paso x aca 1")
+      println("Valor del puntero: " + puntero)
+      val text = "1, a -> 3"
+      val words = text.split("[,-]>? ?")
+      
+      if (puntero >= 3 && !transiciones.isEmpty){
+        println("Paso x aca 2")
+        val array = transiciones.head.split(" ?[,-]>? ?")
+        println("Paso x aca a")
+        array.foreach(f => println("Elemento: " + f))
+        val tuplasAux = tuplas:+ ((array(0),array(1),array(2),false))
+        println("Paso x aca b")
+        obtenerTransicionesEnTuplas(transiciones.tail, tuplasAux, puntero+1)
+        
+      }
+      else if (puntero >= 3 && transiciones.isEmpty){
+        println("Paso x aca 3")
+        tuplas
+      }
+      else{
+        println("Paso x aca 4")
+        obtenerTransicionesEnTuplas(transiciones.tail, tuplas, puntero+1)
+      }
+      
+      //val a : List[(String,String,String,Boolean)] = List()
+      //val b = a:+(("x","y","z",true))     
+      
+    } 
+            
+    def pruebaSplit(): Unit = {
+                     
+      //val text = "s: saturday, sunday, solar, selfie";
+      //val words = text.split("[:,] ");
+      
+      val text = "1, a -> 3";  
+      val words = text.split("[,-]>? ?")
+      
+      words.foreach(f => println ("Elemento del array: " + f))
+      
+    }
+        
+    def procesar(w: String): Boolean = {
+      val info = (5, "Juan", false)
+      val info2 = info.copy(info._1, info._2, info._3)
+      println ("Info 2: " + info2)
+      true  
     }
 
     /*
