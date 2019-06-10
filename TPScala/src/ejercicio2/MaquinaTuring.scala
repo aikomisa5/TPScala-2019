@@ -1,12 +1,5 @@
 package ejercicio2
 
-import scala.collection.mutable.MutableList
-
-object MaquinaTuring {
-  def main(args: Array[String]): Unit = {
-    Estado estado = "estado"
-  }
-
   final class MaquinaTuring(transiciones: Map[(Estado, Char), (Estado, Char, Direccion)]) {
 
     /*
@@ -39,25 +32,18 @@ object MaquinaTuring {
 
       val actual= inicio
       def cabezal(): Unit = {
-        Cinta.cinta += Estado
-        // moverse
-        cabezal()
+        if(Direccion.direccion.equals("D"){ //si la direccion es derecha
+          Cinta.cinta= Nil :: Estado
+          // moverse
+          cabezal()
+        }
+        else { //direccion izq
+          Cinta.cinta= Estado :: Nil
+          moverse
+        }
       }
       actual
     }
 
   }
-
-  class Cinta {
-    val cinta = MutableList()
-  }
-
-  class Estado {
-    val estado: String;
-  }
-
-  class Direccion {
-    val direccion: String;
-  }
-}
 
