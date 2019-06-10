@@ -1,10 +1,15 @@
 package ejercicio2
 
-import scala.collection.mutable.MutableList 
+import scala.collection.mutable.MutableList
 
-final abstract class MaquinaTuring(transiciones: Map[(Estado, Char), (Estado, Char, Direccion)]) {
+object MaquinaTuring {
+  def main(args: Array[String]): Unit = {
+    Estado estado = "estado"
+  }
 
-  /*
+  final class MaquinaTuring(transiciones: Map[(Estado, Char), (Estado, Char, Direccion)]) {
+
+    /*
    * Programar una maquina de Turing determinıstica. Para ello, implementar una clase
    * final class MaquinaTuring(transiciones: Map[(Estado, char), (Estado, char, Direccion)])
    * que tenga una funcion def procesar(inicio: (Estado, Cinta)): (Estado, Cinta)
@@ -13,7 +18,7 @@ final abstract class MaquinaTuring(transiciones: Map[(Estado, Char), (Estado, Ch
    * La maquina puede construirse en memoria, como parte del codigo de casos de test, no esnecesario leer un archivo.
    */
 
-  /*
+    /*
    * contruir cinta (con tantos casilleros)
    * llenar celdas con alfabeto
    * estado en blanco inicialmente
@@ -22,33 +27,37 @@ final abstract class MaquinaTuring(transiciones: Map[(Estado, Char), (Estado, Ch
    * unidad lectora que lee y escribe en la cinta y se mueve a la izquierda o derecha
    */
 
-   // lance el proceso de la maquina y devuelva el estado final de la maquina y la cinta.
-   // unidad lectora que lee y escribe en la cinta y se mueve a la izquierda o derecha
-  def procesar(inicio: (Estado, Cinta)): (Estado, Cinta) => {
-    // encargado de escribir símbolos en la cinta y mover la cinta a la izquierda o a la derecha (siempre una celda a la vez)
-    /*
-      val x = MutableList(1, 2, 3, 4, 5) 
-      x += 6 // MutableList(1, 2, 3, 4, 5, 6) 
-      x ++= MutableList(7, 8, 9) // MutableList(1, 2, 3, 4, 5, 6, 7, 8, 9) 
+    // lance el proceso de la maquina y devuelva el estado final de la maquina y la cinta.
+    // unidad lectora que lee y escribe en la cinta y se mueve a la izquierda o derecha
+    def procesar(inicio: (Estado, Cinta)): (Estado, Cinta) = {
+      // encargado de escribir símbolos en la cinta y mover la cinta a la izquierda o a la derecha (siempre una celda a la vez)
+      /*
+      val x = MutableList(1, 2, 3, 4, 5)
+      x += 6 // MutableList(1, 2, 3, 4, 5, 6)
+      x ++= MutableList(7, 8, 9) // MutableList(1, 2, 3, 4, 5, 6, 7, 8, 9)
     */
-    def cabezal() => { 
-      Cinta.cinta += Estado
-      // moverse
-      cabezal()
+
+      val actual= inicio
+      def cabezal(): Unit = {
+        Cinta.cinta += Estado
+        // moverse
+        cabezal()
+      }
+      actual
     }
-    (Estado,Cinta)
+
   }
 
+  class Cinta {
+    val cinta = MutableList()
+  }
+
+  class Estado {
+    val estado: String;
+  }
+
+  class Direccion {
+    val direccion: String;
+  }
 }
 
-class Cinta {
-  val cinta = MutableList()
-}
-
-abstract class Estado {
-  val estado: String;
-}
-
-abstract class Direccion {
-  val direccion: String;
-}
