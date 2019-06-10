@@ -1,5 +1,7 @@
 package ejercicio2
 
+import scala.collection.mutable.MutableList 
+
 final abstract class MaquinaTuring(transiciones: Map[(Estado, Char), (Estado, Char, Direccion)]) {
 
   /*
@@ -20,29 +22,33 @@ final abstract class MaquinaTuring(transiciones: Map[(Estado, Char), (Estado, Ch
    * unidad lectora que lee y escribe en la cinta y se mueve a la izquierda o derecha
    */
 
+   // lance el proceso de la maquina y devuelva el estado final de la maquina y la cinta.
+   // unidad lectora que lee y escribe en la cinta y se mueve a la izquierda o derecha
   def procesar(inicio: (Estado, Cinta)): (Estado, Cinta) => {
-
+    // encargado de escribir símbolos en la cinta y mover la cinta a la izquierda o a la derecha (siempre una celda a la vez)
+    /*
+      val x = MutableList(1, 2, 3, 4, 5) 
+      x += 6 // MutableList(1, 2, 3, 4, 5, 6) 
+      x ++= MutableList(7, 8, 9) // MutableList(1, 2, 3, 4, 5, 6, 7, 8, 9) 
+    */
+    def cabezal() => { 
+      Cinta.cinta += Estado
+      // moverse
+      cabezal()
+    }
+    (Estado,Cinta)
   }
 
 }
 
 class Cinta {
-  /*
-   * esta compuesta por casilleros o celdas (o de estados?)
-   */
+  val cinta = MutableList()
 }
 
-class Estado {
-  /*
-   * estadoInicial
-   * estadoFinal
-   */
+abstract class Estado {
+  val estado: String;
 }
 
-class Direccion { //trancicion
-  /*
-   * estado
-   * simboloDeCinta
-   * tupla(p, Y, D) 	p estado	Y simboloCinta	D direccion (L R)
-   */
+abstract class Direccion {
+  val direccion: String;
 }
