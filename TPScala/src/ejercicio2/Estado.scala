@@ -1,3 +1,3 @@
 package ejercicio2
 
-class Estado(e: String)
+case class Estado(e: String)

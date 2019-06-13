@@ -1,3 +1,3 @@
 package ejercicio2
 
-class Direccion(d: String)
+case class Direccion(d: String)
