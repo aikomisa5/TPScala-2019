@@ -1,3 +1,3 @@
 package ejercicio2
 
-case class Cinta(cinta: List[(String)])
+case class Cinta(cinta: List[(Char)])
