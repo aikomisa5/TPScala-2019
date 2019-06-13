@@ -1,5 +1,5 @@
 package ejercicio2
 
-class Estado {
-  val estado: String;
+class Estado(e: String) {
+	val estado: String = e
 }

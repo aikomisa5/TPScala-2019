@@ -1,5 +1,5 @@
 package ejercicio2
 
-  class Direccion {
-    val direccion: String;
-  }
+class Direccion(d: String) {
+	val direccion: String = d
+}
