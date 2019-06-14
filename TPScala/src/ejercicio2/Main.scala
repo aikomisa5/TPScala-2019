@@ -6,8 +6,11 @@ object Main {
     printf(cinta.cinta.head.toString())
     val estadosFinales = List(Estado("X"), Estado("Z"))
 
-    val m = new MaquinaTuring(Map((Estado("A"), 'b') -> (Estado("A"), 'b', Direccion("D"))))
+    val m = new MaquinaTuring(Map((Estado("A"), 'a') -> (Estado("B"), 'b', Direccion("D"))))
 
-    //    m.procesar(inicio)
+    val tupla = (Estado("A"), cinta)
+    val procesado = m.procesar(tupla)
+
+    println("procesado -> " + procesado)
   }
 }
