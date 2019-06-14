@@ -13,11 +13,14 @@ final class MaquinaTuring(transiciones: Map[(Estado, Char), (Estado, Char, Direc
 
   def cabezal(actual: (Estado, Cinta), cintaOriginal: Cinta, t: (Estado, Char, Direccion)): (Estado, Cinta) = {
     if (actual._1.e != new Estado("F")) {
+      println("elementos cinta nueva " + numElems(actual._2.cinta.toList) +" elementos cinta original "+ numElems(cintaOriginal.cinta.toList))
       if (numElems(actual._2.cinta.toList) < numElems(cintaOriginal.cinta.toList)) {
         if (t._3 == Direccion("D")) {
+          println("entro der")
           val nuevaCinta = Cinta(actual._2.cinta ::: List(t._2))
           cabezal((t._1, nuevaCinta), cintaOriginal, t)
         } else if (t._3 == Direccion("I")) {
+          println("entro izq")
           val nuevaCinta = Cinta(t._2 :: actual._2.cinta)
           cabezal((t._1, nuevaCinta), cintaOriginal, t)
         }
