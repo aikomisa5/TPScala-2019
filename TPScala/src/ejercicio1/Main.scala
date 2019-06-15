@@ -1,3 +1,5 @@
+package ejercicio1
+
 import scala.io.Source
 
 object Main {
