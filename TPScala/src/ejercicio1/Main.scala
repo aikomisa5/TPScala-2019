@@ -10,13 +10,13 @@ object Main {
       imprimirAutomata(lines)
 
       val alfabeto = obtenerAlfabeto(lines)
-      recorrerString(alfabeto)
+      recorrerString(alfabeto, "elemento del string: ")
 
       val cantidadEstado = obtenerCantidadEstados(lines)
       println("La cantidad de estados es: " + cantidadEstado)
 
       val estadosFinales = obtenerEstadosFinales(lines)
-      println(estadosFinales.foreach((c: String) => println("Estado final: " + c)))
+      recorrerString(estadosFinales, "Estado final: ")
 
       procesar("Fifito")
 
@@ -32,10 +32,10 @@ object Main {
 
     }
 
-    def recorrerString(w: Array[String], puntero: Int = 0): Unit = {
+    def recorrerString(w: Array[String], mensaje: String, puntero: Int = 0): Unit = {
       if (w.size > 0) {
-        println("elemento del string: " + w.head)
-        recorrerString(w.tail, puntero + 1)
+        println(mensaje + w.head)
+        recorrerString(w.tail, mensaje, puntero + 1)
       }
     }
 
@@ -48,11 +48,7 @@ object Main {
     }
 
     def obtenerAlfabeto(lista: List[String]): Array[String] = {
-      //Hago un split del string ubicado en el head de la lista del alfabeto
-      val alfa = lista.head.split(", ")
-
-      //Retorno alfa
-      alfa
+      lista.head.split(", ")
     }
 
     @annotation.tailrec
