@@ -10,13 +10,13 @@ object Main {
       imprimirAutomata(lines)
 
       val alfabeto = obtenerAlfabeto(lines)
-      recorrerString(alfabeto, "elemento del string: ")
+      recorrerListaString(alfabeto, "elemento del string: ")
 
       val cantidadEstado = obtenerCantidadEstados(lines)
       println("La cantidad de estados es: " + cantidadEstado)
 
       val estadosFinales = obtenerEstadosFinales(lines)
-      recorrerString(estadosFinales, "Estado final: ")
+      recorrerListaString(estadosFinales, "Estado final: ")
 
       procesar("Fifito")
 
@@ -32,10 +32,10 @@ object Main {
 
     }
 
-    def recorrerString(w: Array[String], mensaje: String, puntero: Int = 0): Unit = {
+    def recorrerListaString(w: Array[String], mensaje: String, puntero: Int = 0): Unit = {
       if (w.size > 0) {
         println(mensaje + w.head)
-        recorrerString(w.tail, mensaje, puntero + 1)
+        recorrerListaString(w.tail, mensaje, puntero + 1)
       }
     }
 
