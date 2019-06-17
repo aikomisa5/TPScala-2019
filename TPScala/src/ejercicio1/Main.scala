@@ -18,14 +18,12 @@ object Main {
       val estadosFinales = obtenerEstadosFinales(lines)
       recorrerListaString(estadosFinales, "Estado final: ")
 
+      val tuplas = obtenerTransicionesEnTuplas(lines)
+      recorrerListaTuplas(tuplas.toList, "Transisiones: ")
+
+      println()
       val s = "d"
       println(s + " pertenece al lenguaje: " + procesar(s, alfabeto.mkString))
-
-      //      pruebaSplit()
-      //
-      //      val tuplas = obtenerTransicionesEnTuplas(lines)
-      //      recorrerString(tuplas, "El valor del elemento es: ")
-      //      tuplas.foreach(f => println("El valor del elemento es: " + f))
 
     } catch {
       case _: Throwable => println("Ha ocurrido un error al intentar leer el archivo .txt")
@@ -37,6 +35,13 @@ object Main {
       if (w.size > 0) {
         println(mensaje + w.head)
         recorrerListaString(w.tail, mensaje)
+      }
+    }
+
+    def recorrerListaTuplas(w: List[(String, String, String)], mensaje: String): Unit = {
+      if (w.size > 0) {
+        println(mensaje + w.head)
+        recorrerListaTuplas(w.drop(1), mensaje)
       }
     }
 
@@ -86,66 +91,17 @@ object Main {
         obtenerCantidadEstados(lista.tail, puntero + 1)
     }
 
-    //    def obtenerTransicionesEnTuplas(transiciones: List[String], tuplas: List[(String, String, String, Boolean)] = List[(String, String, String, Boolean)](), puntero: Int = 0): List[(String, String, String, Boolean)] = {
-    //      println("Paso x aca 1")
-    //      println("Valor del puntero: " + puntero)
-    //      val text = "1, a -> 3"
-    //      val words = text.split("[,-]>? ?")
-    //
-    //      if (puntero >= 3 && !transiciones.isEmpty) {
-    //        println("Paso x aca 2")
-    //        val array = transiciones.head.split(" ?[,-]>? ?")
-    //        println("Paso x aca a")
-    //        array.foreach(f => println("Elemento: " + f))
-    //        val tuplasAux = tuplas :+ ((array(0), array(1), array(2), false))
-    //        println("Paso x aca b")
-    //        obtenerTransicionesEnTuplas(transiciones.tail, tuplasAux, puntero + 1)
-    //
-    //      } else if (puntero >= 3 && transiciones.isEmpty) {
-    //        println("Paso x aca 3")
-    //        tuplas
-    //      } else {
-    //        println("Paso x aca 4")
-    //        obtenerTransicionesEnTuplas(transiciones.tail, tuplas, puntero + 1)
-    //      }
-    //
-    //      //val a : List[(String,String,String,Boolean)] = List()
-    //      //val b = a:+(("x","y","z",true))
-    //
-    //    }
-    //
-    //    def pruebaSplit(): Unit = {
-    //
-    //      //val text = "s: saturday, sunday, solar, selfie";
-    //      //val words = text.split("[:,] ");
-    //
-    //      val text = "1, a -> 3";
-    //      val words = text.split("[,-]>? ?")
-    //
-    //      words.foreach(f => println("Elemento del array: " + f))
-    //
-    //    }
-
-    //    def proceso(cadena: String): Boolean = {
-    //      val lines = Source.fromFile("automata.txt").getLines.toList
-    //      val tuplas = obtenerTransicionesEnTuplas(lines)
-    //
-    //      //procesoRecursivo("1", cadena, tuplas)
-    //      true
-    //    }
-
-    /*
-    def procesoRecursivo(estadoActual : String, cadena : String, transicionesTuplas : List[(String,String,String,Boolean)]) : Boolean = {
-      val b = false
-
-      cadena.foreach(f=>{
-        b = b + false
-      })
-
-      true
+    def obtenerTransicionesEnTuplas(transiciones: List[String], tuplas: List[(String, String, String)] = List[(String, String, String)](), puntero: Int = 0): List[(String, String, String)] = {
+      if (puntero >= 3 && !transiciones.isEmpty) {
+        val array = transiciones.head.split(" ?[,-]>? ?")
+        val tuplasAux = tuplas :+ ((array(0), array(1), array(2)))
+        obtenerTransicionesEnTuplas(transiciones.tail, tuplasAux, puntero + 1)
+      } else if (puntero >= 3 && transiciones.isEmpty) {
+        tuplas
+      } else {
+        obtenerTransicionesEnTuplas(transiciones.tail, tuplas, puntero + 1)
+      }
     }
-
-    */
 
     //    def seEncuentraEnAlgunaTransicion(c: Char, estadoActual: String): Boolean = {
     //      val lines = Source.fromFile("automata.txt").getLines.toList
