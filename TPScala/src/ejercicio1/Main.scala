@@ -18,7 +18,8 @@ object Main {
       val estadosFinales = obtenerEstadosFinales(lines)
       recorrerListaString(estadosFinales, "Estado final: ")
 
-      procesar("Fifito")
+      val s = "d"
+      println(s + " pertenece al lenguaje: " + procesar(s))
 
       //      pruebaSplit()
       //
@@ -32,18 +33,29 @@ object Main {
 
     }
 
-    def recorrerListaString(w: Array[String], mensaje: String, puntero: Int = 0): Unit = {
+    def recorrerListaString(w: Array[String], mensaje: String): Unit = {
       if (w.size > 0) {
         println(mensaje + w.head)
-        recorrerListaString(w.tail, mensaje, puntero + 1)
+        recorrerListaString(w.tail, mensaje)
       }
     }
 
+    @annotation.tailrec
     def procesar(w: String): Boolean = {
-      val info = (5, "Juan", false)
-      val info2 = info.copy(info._1, info._2, info._3)
-      println("Info 2: " + info2)
-      true
+      if (w.size == 0)
+        return false
+      else if (perteneceAlAlfabetoDeInput(w.head, obtenerAlfabeto(Source.fromFile("automata.txt").getLines.toList).mkString))
+        return true
+      procesar(w.tail)
+    }
+
+    @annotation.tailrec
+    def perteneceAlAlfabetoDeInput(w: Char, alf: String): Boolean = {
+      if (alf.size == 0)
+        return false
+      else if (alf.head.toString().equals(w.toString()))
+        return true
+      perteneceAlAlfabetoDeInput(w, alf.tail)
     }
 
     @annotation.tailrec
