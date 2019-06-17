@@ -9,23 +9,17 @@ final class MaquinaTuring(transiciones: Map[(Estado, Char), (Estado, Char, Direc
     cabezal((inicio._1, Cinta(List())), inicio._2, transiciones(Estado("A"), 'a'))
   }
 
+  @annotation.tailrec
   def cabezal(actual: (Estado, Cinta), cintaOriginal: Cinta, t: (Estado, Char, Direccion)): (Estado, Cinta) = {
-    if (actual._1.e != new Estado("F")) {
-      if (numElems(actual._2.cinta.toList) < numElems(cintaOriginal.cinta.toList)) {
-        if (t._3 == Direccion("D")) {
-          val nuevaCinta = Cinta(actual._2.cinta ::: List(t._2))
-          cabezal((t._1, nuevaCinta), cintaOriginal, t)
-        } else if (t._3 == Direccion("I")) {
-          val nuevaCinta = Cinta(t._2 :: actual._2.cinta)
-          cabezal((t._1, nuevaCinta), cintaOriginal, t)
-        }
-      } else {
-        println("entro en else. Retornar -> " + actual)
-        return actual
-      }
+    if (actual._1.e == new Estado("F"))
+      return actual
+    if (numElems(actual._2.cinta.toList) == numElems(cintaOriginal.cinta.toList))
+      return actual
+    def izqOrDer(dir: Direccion): Cinta = dir match {
+      case Direccion("D") => Cinta(actual._2.cinta ::: List(t._2))
+      case Direccion("I") => Cinta(t._2 :: actual._2.cinta)
     }
-    println("abajo -> " + actual)
-    (Estado("C"), Cinta(List('c')))
+    cabezal((t._1, izqOrDer(t._3)), cintaOriginal, t)
   }
 
   def numElems(l: List[Char]): Int =
