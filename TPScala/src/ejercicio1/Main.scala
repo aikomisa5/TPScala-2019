@@ -18,12 +18,12 @@ object Main {
       val estadosFinales = obtenerEstadosFinales(lines)
       recorrerListaString(estadosFinales, "Estado final: ")
 
-      val tuplas = obtenerTransicionesEnTuplas(lines)
-      recorrerListaTuplas(tuplas.toList, "Transisiones: ")
+      val tuplasTransiciones = obtenerTransicionesEnTuplas(lines)
+      recorrerListaTuplas(tuplasTransiciones.toList, "Transiciones: ")
 
       println()
-      val s = "d"
-      println(s + " pertenece al lenguaje: " + procesar(s, alfabeto.mkString))
+      val s = "ba"
+      println(s + " pertenece al lenguaje: " + procesar(s, alfabeto.mkString, estadosFinales.toList, tuplasTransiciones))
 
     } catch {
       case _: Throwable => println("Ha ocurrido un error al intentar leer el archivo .txt")
@@ -46,12 +46,25 @@ object Main {
     }
 
     @annotation.tailrec
-    def procesar(w: String, alf: String): Boolean = {
+    def procesar(w: String, alf: String, estadosFinales: List[(String)], tuplasTransiciones: List[(String, String, String)], puntero: Int = 0): Boolean = {
       if (w.size == 0)
         return false
-      else if (perteneceAlAlfabetoDeInput(w.head, alf))
-        return true
-      procesar(w.tail, alf)
+      if (!perteneceAlAlfabetoDeInput(w.head, alf))
+        return false
+      if (!ultimoElemEstadoFinal(w, estadosFinales, tuplasTransiciones))
+        return false
+      return true
+      procesar(w.tail, alf, estadosFinales, tuplasTransiciones, puntero + 1)
+    }
+
+    @annotation.tailrec
+    def ultimoElemEstadoFinal(w: String, estadoFinal: List[(String)], tuplasTransiciones: List[(String, String, String)], puntero: Int = 0): Boolean = {
+      if (tuplasTransiciones.size == 0)
+        return false
+      if (w(w.length() - 1).toString().equals(tuplasTransiciones.head._2))
+        if (estadoFinal.filter(_.equals(tuplasTransiciones.head._3)) != List())
+          return true
+      ultimoElemEstadoFinal(w, estadoFinal, tuplasTransiciones.tail, puntero + 1)
     }
 
     @annotation.tailrec
@@ -102,36 +115,6 @@ object Main {
         obtenerTransicionesEnTuplas(transiciones.tail, tuplas, puntero + 1)
       }
     }
-
-    //    def seEncuentraEnAlgunaTransicion(c: Char, estadoActual: String): Boolean = {
-    //      val lines = Source.fromFile("automata.txt").getLines.toList
-    //      val tuplas = obtenerTransicionesEnTuplas(lines)
-    //
-    //      tuplas.foreach(f => {
-    //        if (f._2 == c && f._1 == estadoActual) {
-    //          true
-    //        }
-    //
-    //      })
-    //
-    //      false
-    //    }
-
-    /*
-    def verificarInput (input : String): Boolean = {
-
-    }
-
-    def recursionInput (input : String, i : Int): Boolean = {
-      if (i == 0) {
-        false
-      }
-      else{
-        recursionInput()
-    }
-
-    }
-    */
   }
 
 }
