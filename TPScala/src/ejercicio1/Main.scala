@@ -21,8 +21,7 @@ object Main {
       val tuplasTransiciones = obtenerTransicionesEnTuplas(lines)
       recorrerListaTuplas(tuplasTransiciones.toList, "Transiciones: ")
 
-      println()
-      val s = "ba"
+      val s = "dababa"
       println(s + " pertenece al lenguaje: " + procesar(s, alfabeto.mkString, estadosFinales.toList, tuplasTransiciones))
 
     } catch {
@@ -53,18 +52,71 @@ object Main {
         return false
       if (!ultimoElemEstadoFinal(w, estadosFinales, tuplasTransiciones))
         return false
+      if (!primeroEstadoInicialUno(w, tuplasTransiciones))
+        return false
+      //      if (!proximoCorrespondienteAEstado(w, tuplasTransiciones))
+      //        return false
       return true
       procesar(w.tail, alf, estadosFinales, tuplasTransiciones, puntero + 1)
     }
 
     @annotation.tailrec
-    def ultimoElemEstadoFinal(w: String, estadoFinal: List[(String)], tuplasTransiciones: List[(String, String, String)], puntero: Int = 0): Boolean = {
+    def primeroEstadoInicialUno(w: String, tuplasTransiciones: List[(String, String, String)]): Boolean = {
+      println()
+      if (tuplasTransiciones.size == 0)
+        return false
+      if (w(0).toString().equals(tuplasTransiciones.head._2)) // si el primer elem es igual a el de la transaccion
+        if (tuplasTransiciones.head._1.toString().equals(1.toString()))
+          println("retornar false")
+      return true
+      primeroEstadoInicialUno(w, tuplasTransiciones.tail)
+    }
+
+    @annotation.tailrec
+    def proximoCorrespondienteAEstado(w: String, tuplasTransiciones: List[(String, String, String)], puntero: Int = 0): Boolean = {
+      if (tuplasTransiciones.size == 0)
+        return false
+      if (w.length() == puntero)
+        return true
+      println()
+      val condicion = w(puntero).toString().equals(tuplasTransiciones.head._2)
+      println("w puntero   " + w(puntero).toString())
+      println("cabezatupla " + tuplasTransiciones.head._2)
+      println("condicion   " + condicion)
+      //      if (!condicion)
+      //        return false
+      def cambiarTrans(t: Boolean): List[(String, String, String)] = t match {
+        case true  => tuplasTransiciones
+        case false => tuplasTransiciones.tail
+      }
+      def cambiarPuntero(c: Boolean): Int = c match {
+        case true  => puntero + 1
+        case false => puntero
+      }
+      proximoCorrespondienteAEstado(w, cambiarTrans(condicion), cambiarPuntero(condicion))
+    }
+
+    //    @annotation.tailrec
+    //    def cabezal(actual: (Estado, Cinta), cintaOriginal: Cinta, t: (Estado, Char, Direccion)): (Estado, Cinta) = {
+    //      if (actual._1.e == new Estado("F"))
+    //        return actual
+    //      if (numElems(actual._2.cinta.toList) == numElems(cintaOriginal.cinta.toList))
+    //        return actual
+    //      def izqOrDer(dir: Direccion): Cinta = dir match {
+    //        case Direccion("D") => Cinta(actual._2.cinta ::: List(t._2))
+    //        case Direccion("I") => Cinta(t._2 :: actual._2.cinta)
+    //      }
+    //      cabezal((t._1, izqOrDer(t._3)), cintaOriginal, t)
+    //    }
+
+    @annotation.tailrec
+    def ultimoElemEstadoFinal(w: String, estadoFinal: List[(String)], tuplasTransiciones: List[(String, String, String)]): Boolean = {
       if (tuplasTransiciones.size == 0)
         return false
       if (w(w.length() - 1).toString().equals(tuplasTransiciones.head._2))
         if (estadoFinal.filter(_.equals(tuplasTransiciones.head._3)) != List())
           return true
-      ultimoElemEstadoFinal(w, estadoFinal, tuplasTransiciones.tail, puntero + 1)
+      ultimoElemEstadoFinal(w, estadoFinal, tuplasTransiciones.tail)
     }
 
     @annotation.tailrec
