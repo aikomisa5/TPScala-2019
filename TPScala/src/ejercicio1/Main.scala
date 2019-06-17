@@ -19,7 +19,7 @@ object Main {
       recorrerListaString(estadosFinales, "Estado final: ")
 
       val s = "d"
-      println(s + " pertenece al lenguaje: " + procesar(s))
+      println(s + " pertenece al lenguaje: " + procesar(s, alfabeto.mkString))
 
       //      pruebaSplit()
       //
@@ -41,12 +41,12 @@ object Main {
     }
 
     @annotation.tailrec
-    def procesar(w: String): Boolean = {
+    def procesar(w: String, alf: String): Boolean = {
       if (w.size == 0)
         return false
-      else if (perteneceAlAlfabetoDeInput(w.head, obtenerAlfabeto(Source.fromFile("automata.txt").getLines.toList).mkString))
+      else if (perteneceAlAlfabetoDeInput(w.head, alf))
         return true
-      procesar(w.tail)
+      procesar(w.tail, alf)
     }
 
     @annotation.tailrec
