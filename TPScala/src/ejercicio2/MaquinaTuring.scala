@@ -9,20 +9,16 @@ final class MaquinaTuring(transiciones: Map[(Estado, Char), (Estado, Char, Direc
 
   @annotation.tailrec
   def cabezal(actual: (Estado, Cinta), cintaOriginal: Cinta, t: Map[(ejercicio2.Estado, Char), (ejercicio2.Estado, Char, ejercicio2.Direccion)], estadosFinales: List[(Estado)], punteroEstado: Int = 0): (Estado, Cinta) = {
-    println("actual - " + actual)
-    if (t.size == 0) {
-      println("\nretorno por vacio - " + t)
-      return actual
-    }
     val c = punteroEstado <= estadosFinales.size - 1
     if (c) {
-      println(actual._1)
-      println(estadosFinales(punteroEstado))
-      println(actual._1 == estadosFinales(punteroEstado))
       if (actual._1 == estadosFinales(punteroEstado)) {
         println("\nencontro estado final")
         return actual
       }
+    }
+    if (t.size == 0) {
+      println("\nretorno por vacio - " + t)
+      return actual
     }
     def cambiarPuntero(c: Boolean): Int = c match {
       case true  => punteroEstado + 1
