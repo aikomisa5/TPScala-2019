@@ -22,7 +22,7 @@ object Main {
       recorrerListaTuplas(tuplasTransiciones.toList, "Transiciones: ")
 
       println()
-      val s = "aaabaa"
+      val s = "aaabaac"
       println(s + " pertenece al lenguaje: " + procesar(s, alfabeto.mkString, estadosFinales.toList, tuplasTransiciones))
 
     } catch {
