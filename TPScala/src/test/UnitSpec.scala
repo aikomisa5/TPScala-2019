@@ -1,4 +1,4 @@
-package testMaquinaTuring
+package test
 
 import org.scalatest.FlatSpec
 import org.scalatest.Matchers

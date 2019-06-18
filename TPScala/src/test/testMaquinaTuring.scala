@@ -1,4 +1,4 @@
-package testMaquinaTuring
+package test
 
 class testMaquinaTuring extends UnitSpec {
 //  val lista1 = List(3)
