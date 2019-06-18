@@ -6,22 +6,30 @@ final class MaquinaTuring(transiciones: Map[(Estado, Char), (Estado, Char, Direc
 
   def procesar(inicio: (Estado, Cinta), estadosFinales: List[(Estado)]): (Estado, Cinta) = {
     val cantElementosCinta = numElems(inicio._2.cinta.toList)
-    cabezal((inicio._1, Cinta(List())), inicio._2, transiciones(Estado("A"), 'a'), estadosFinales)
+    cabezal((inicio._1, Cinta(List(inicio._2.cinta(1)))), inicio._2, transiciones, estadosFinales)
   }
 
   @annotation.tailrec
-  def cabezal(actual: (Estado, Cinta), cintaOriginal: Cinta, t: (Estado, Char, Direccion), estadosFinales: List[(Estado)], intEst: Int = 0): (Estado, Cinta) = {
-    if (estadosFinales.size == intEst)
-      return actual
-    if (actual._1 == estadosFinales(intEst))
-      return actual
-    if (numElems(actual._2.cinta.toList) == numElems(cintaOriginal.cinta.toList))
-      return actual
-    def izqOrDer(dir: Direccion): Cinta = dir match {
-      case Direccion("D") => Cinta(actual._2.cinta ::: List(t._2))
-      case Direccion("I") => Cinta(t._2 :: actual._2.cinta)
+  def cabezal(actual: (Estado, Cinta), cintaOriginal: Cinta, t: Map[(ejercicio2.Estado, Char), (ejercicio2.Estado, Char, ejercicio2.Direccion)], estadosFinales: List[(Estado)], intEst: Int = 0): (Estado, Cinta) = {
+    if (intEst < cintaOriginal.cinta.size) {
+      if (estadosFinales.size > intEst) {
+        if (actual._1 == estadosFinales(intEst)) {
+          println("encontro estado final")
+          return actual
+        }
+      }
     }
-    cabezal((t._1, izqOrDer(t._3)), cintaOriginal, t, estadosFinales, intEst + 1)
+    println()
+    def izqOrDer(dir: Direccion): Cinta = dir match {
+      case Direccion("D") => Cinta(actual._2.cinta ::: List(t.head._2._2))
+      case Direccion("I") => Cinta(t.head._2._2 :: actual._2.cinta)
+    }
+    println("actual " + actual.toString())
+    if (t.tail.isEmpty) {
+      println("retorno por vacio")
+      return actual
+    }
+    cabezal((t.head._2._1, izqOrDer(t.head._2._3)), cintaOriginal, t.tail, estadosFinales, intEst + 1)
   }
 
   def numElems(l: List[Char]): Int =
